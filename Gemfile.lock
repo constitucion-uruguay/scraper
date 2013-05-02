@@ -1,0 +1,27 @@
+GEM
+  remote: https://rubygems.org/
+  specs:
+    diff-lcs (1.2.4)
+    nokogiri (1.5.9)
+    nokogiri (1.5.9-java)
+    rake (10.0.4)
+    rspec (2.13.0)
+      rspec-core (~> 2.13.0)
+      rspec-expectations (~> 2.13.0)
+      rspec-mocks (~> 2.13.0)
+    rspec-core (2.13.1)
+    rspec-expectations (2.13.0)
+      diff-lcs (>= 1.1.3, < 2.0)
+    rspec-given (2.4.1)
+      rspec (>= 2.11)
+      sorcerer (>= 0.3.7)
+    rspec-mocks (2.13.1)
+    sorcerer (0.3.10)
+
+PLATFORMS
+  java
+
+DEPENDENCIES
+  nokogiri
+  rake (= 10.0.4)
+  rspec-given (= 2.4.1)
