@@ -1,6 +1,7 @@
 GEM
   remote: https://rubygems.org/
   specs:
+    columnize (0.3.6)
     diff-lcs (1.2.4)
     nokogiri (1.5.9)
     nokogiri (1.5.9-java)
@@ -16,6 +17,10 @@ GEM
       rspec (>= 2.11)
       sorcerer (>= 0.3.7)
     rspec-mocks (2.13.1)
+    ruby-debug (0.10.4)
+      columnize (>= 0.1)
+      ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4-java)
     sorcerer (0.3.10)
 
 PLATFORMS
@@ -25,3 +30,4 @@ DEPENDENCIES
   nokogiri
   rake (= 10.0.4)
   rspec-given (= 2.4.1)
+  ruby-debug
