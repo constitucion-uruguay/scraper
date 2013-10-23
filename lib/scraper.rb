@@ -85,6 +85,7 @@ class Scraper
             output << ""
           end
         elsif tag.name == "table"
+          tag = tag.first_element_child if tag.first_element_child.element? && tag.first_element_child.name == "tbody"
           rows = tag.search("./tr")
           rows.each do |row|
             cols = row.search("./td")
