@@ -88,31 +88,8 @@ class Scraper
           tag = tag.first_element_child if tag.first_element_child.element? && tag.first_element_child.name == "tbody"
           rows = tag.search("./tr")
           rows.each do |row|
-            cols = row.search("./td")
-            if cols.size == 2 || (cols.size == 3 && !cols[0].text.empty?)
-              item_number = cols[0].text.truncate.gsub(/(?:º\)|º|\))/, ".")
-              if cols.size == 2
-                content_index = 1
-              else
-                content_index = 2
-              end
-              item_content = cols[content_index].children.map{|t| t.text}.join.truncate
-              if item_number.empty?
-                output << "   #{item_content}"
-              else
-                output << "#{item_number} #{item_content}"
-              end
-              output << ""
-            elsif cols.size == 3
-              item_number = cols[1].text.truncate.gsub(/(?:º\)|º|\))/, ".")
-              item_content = cols[2].children.map{|t| t.text}.join.truncate
-              if item_number.empty?
-                output << "      #{item_content}"
-              else
-                output << "   #{item_number} #{item_content}"
-              end
-              output << ""
-            end
+            output << row.xpath(".//td//text()").map(&:text).join(" ");
+            output << ""
           end
         end
         tags.shift

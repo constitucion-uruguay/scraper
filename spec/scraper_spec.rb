@@ -141,9 +141,9 @@ Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A. Lorem ipsum
+A) Lorem ipsum
 
-B. Lorem ipsum
+B) Lorem ipsum
                     md
                   }
                 end
@@ -164,7 +164,7 @@ B. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A. Lorem ipsum
+A) Lorem ipsum
                     md
                   }
                 end
@@ -183,7 +183,7 @@ A. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A'. Lorem ipsum
+A') Lorem ipsum
                     md
                   }
                 end
@@ -207,9 +207,9 @@ A'. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A. Lorem ipsum
+A) Lorem ipsum
 
-   a. Lorem ipsum
+a) Lorem ipsum
                     md
                   }
                 end
@@ -229,7 +229,7 @@ A. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-   a. Lorem ipsum
+a) Lorem ipsum
                     md
                   }
                 end
@@ -252,9 +252,9 @@ A. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A. Lorem ipsum
+A) Lorem ipsum
 
-   Lorem ipsum
+Lorem ipsum
                     md
                   }
                 end
@@ -280,9 +280,9 @@ A. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A. Lorem ipsum
+A) Lorem ipsum
 
-   a. Lorem ipsum
+a) Lorem ipsum
                     md
                   }
                 end
@@ -307,9 +307,9 @@ A. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-A. Lorem ipsum
+A) * Lorem ipsum
 
-B. Lorem ipsum
+B) *** Lorem ipsum
                     md
                   }
                 end
@@ -384,7 +384,7 @@ __Artículo 1__. Lorem ipsum
                   }
                   Then {
                     output.should end_with <<-md
-A. Lorem ipsum
+A) Lorem ipsum
                     md
                   }
                 end
