@@ -229,7 +229,7 @@ A. Lorem ipsum
                   Then {
                     output.should end_with <<-md
 
-a. Lorem ipsum
+   a. Lorem ipsum
                     md
                   }
                 end
