@@ -91,7 +91,7 @@ class Scraper
           tag = tag.first_element_child if tag.first_element_child.element? && tag.first_element_child.name == "tbody"
           rows = tag.search("./tr")
           rows.each do |row|
-            output << row.xpath(".//td//text()").map(&:text).join(" ");
+            output << row.xpath(".//td//text()").map(&:text).join(" ").truncate;
             output << ""
           end
         end

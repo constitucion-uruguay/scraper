@@ -314,6 +314,25 @@ B) *** Lorem ipsum
                   }
                 end
 
+                context "with items containing line breaks" do
+                  When {
+                    input << <<-html
+<table>
+  <tr>
+    <td>A)</td>
+    <td>Lorem
+    ipsum</td>
+  </tr>
+</table>
+                    html
+                  }
+                  Then {
+                    output.should end_with <<-md
+A) Lorem ipsum
+                    md
+                  }
+                end
+
               end
 
               context "> Article with ordinal indicator" do
