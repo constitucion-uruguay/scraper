@@ -67,9 +67,12 @@ class Scraper
             state = :section
             next
           else
-            # Special chapter
-            output << "### #{tag.text.truncate}"
+            # if it's not a chapter nor a section it's a special section
+            # that must me treated as a chapter
+            output << "## #{tag.text.truncate}"
             output << ""
+
+            tags.shift
           end
         elsif tag.name == "p"
           # TODO: Allow internal anchors
