@@ -35,9 +35,6 @@ class Scraper
           end
           output << tag.text.truncate
           output << ""
-        elsif tag.name == "hr"
-          output << "---"
-          output << ""
         elsif tag.name == "p"
           output << tag.text.truncate
           output << ""
