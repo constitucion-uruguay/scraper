@@ -1,0 +1,9 @@
+#!/bin/bash
+
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const830.htm > const830.md
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const918.htm > const918.md
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const934.htm > const934.md
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const942.htm > const942.md
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const952.htm > const952.md
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const967.htm > const967.md
+./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const004.htm > const004.md
