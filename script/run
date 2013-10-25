@@ -1,9 +1,16 @@
 #!/bin/bash
 
+echo "Scraping Constitucion de 1830..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const830.htm > const830.md
+echo "Scraping Constitucion de 1918..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const918.htm > const918.md
+echo "Scraping Constitucion de 1934..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const934.htm > const934.md
+echo "Scraping Constitucion de 1942..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const942.htm > const942.md
+echo "Scraping Constitucion de 1952..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const952.htm > const952.md
+echo "Scraping Constitucion de 1967..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const967.htm > const967.md
+echo "Scraping Constitucion de 2004..."
 ./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const004.htm > const004.md
