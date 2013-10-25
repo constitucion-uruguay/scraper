@@ -410,6 +410,19 @@ __Artículo 1__. Lorem ipsum
                 }
               end
 
+              context "> Article with underline inside anchor" do
+                When {
+                  input << <<-html
+<p><a name="art1"><u>Artículo 1º</u></a>.- Lorem ipsum</p>
+                  html
+                }
+                Then {
+                  output.should end_with <<-md
+__Artículo 1__. Lorem ipsum
+                  md
+                }
+              end
+
               context "> Transitional arrangements" do
                 When {
                   input << <<-html

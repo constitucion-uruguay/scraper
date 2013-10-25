@@ -10,6 +10,10 @@ class String
 end
 
 class Scraper
+
+  ARTICLE_INDEX_PATTERN = /^(Artículo \d+)\W+/i
+  ITEM_INDEX_PATTERN    = /^((\d+|[a-zA-Z]'?))[\.º)\-]+\s/
+
   def initialize(html)
     @doc = Nokogiri::HTML(html, nil, "iso-8859-1")
     @doc.encoding = 'utf-8'
@@ -72,17 +76,8 @@ class Scraper
           end
         elsif tag.name == "p"
           # TODO: Allow internal anchors
-          if tag.children.first.name == "u"
-            anchor = tag.children.first.children.first
-            article_number = anchor.text.truncate.gsub(/º/, "")
-            article_content = tag.children[1..-1].map{|t| t.text}.join.truncate.gsub(/^[\W]+/, "")
-            output << "__#{article_number}__. #{article_content}"
-            output << ""
-          else
-            content = tag.children.map{|t| t.text}.join.truncate
-            output << "#{content}"
-            output << ""
-          end
+          output << parse_paragraph_with_article(tag)
+          output << ""
         elsif tag.name == "table"
           tag = tag.first_element_child if tag.first_element_child.element? && tag.first_element_child.name == "tbody"
           rows = tag.search("./tr")
@@ -105,9 +100,14 @@ class Scraper
 
   private
 
+  def parse_paragraph_with_article(paragraph)
+    text = paragraph.xpath(".//text()").map(&:text).join(" ").truncate;
+    text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ')
+  end
+
   def parse_row_with_item(row)
-    str = row.xpath(".//td//text()").map(&:text).join(" ").truncate;
-    str.gsub(/^((\d+|[a-zA-Z]'?))[\.º)\-]+\s/, '\1) ')
+    text = row.xpath(".//td//text()").map(&:text).join(" ").truncate;
+    text.gsub(ITEM_INDEX_PATTERN, '\1) ')
   end
 
 end
