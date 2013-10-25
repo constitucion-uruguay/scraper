@@ -43,8 +43,7 @@ class Scraper
       when :section
         if tag.name == "h4"
           if tag.text.downcase =~ /secci[oó]n/
-            output << "#{tag.text.truncate}"
-            output << "-" * tag.text.length
+            output << "## #{tag.text.truncate}"
             output << ""
           elsif tag.text.downcase =~ /cap[ií]tulo/
             state = :chapter

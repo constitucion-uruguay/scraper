@@ -54,8 +54,8 @@ CONSTITUCION 1967 CON LAS MODIFICACIONES PLEBISCITADAS EL 26 DE NOVIEMBRE DE 198
           }
           Then {
             output.should end_with <<-md
-SECCION I
----------
+
+## SECCION I
             md
           }
 
