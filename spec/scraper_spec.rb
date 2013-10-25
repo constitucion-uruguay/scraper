@@ -455,6 +455,19 @@ A) Lorem ipsum
                     md
                   }
                 end
+
+                context "> With parts" do
+                  When {
+                    input << <<-html
+<h4>IV</h4>
+                    html
+                  }
+                  Then {
+                    output.should end_with <<-md
+### IV
+                    md
+                  }
+                end
               end
             end
 
