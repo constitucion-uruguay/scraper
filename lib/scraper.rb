@@ -33,7 +33,7 @@ class Scraper
         elsif is_section_title?(tag)
           state = :section
           next
-        elsif tag.name != "text"
+        elsif is_main_subtitle?(tag)
           # main subtitle
           output << parse_main_subtitle(tag)
         end
@@ -44,7 +44,7 @@ class Scraper
         elsif is_chapter_title?(tag)
           state = :chapter
           next
-        elsif tag.name != "text"
+        elsif is_section_subtitle?(tag)
           # section subtitle
           output << parse_section_subtitle(tag)
         end
@@ -98,8 +98,16 @@ class Scraper
     tag.name == "h2"
   end
 
+  def is_main_subtitle?(tag)
+    tag.name == "h4" || tag.name == "p"
+  end
+
   def is_section_title?(tag)
     tag.name == "h4" && tag.text =~ /secci[oó]n/i
+  end
+
+  def is_section_subtitle?(tag)
+    tag.name == "h4"
   end
 
   def is_chapter_title?(tag)

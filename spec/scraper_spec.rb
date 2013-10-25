@@ -503,5 +503,37 @@ Lorem ipsum
         end
       end
     end
+
+    context "> Document with strange tags" do
+      When {
+        input << <<-html
+<div>Should be avoided</div>
+<h2 align="center">Main Title</h2>
+<div>Should be avoided</div>
+<div>Should be avoided</div>
+<h4>Main Subtitle</h4>
+<div>Should be avoided</div>
+<p>Also Main Subtitle</p>
+<div>Should be avoided</div>
+<h4>Sección 1</h4>
+<div>Should be avoided</div>
+<h4>Capítulo 1</h4>
+        html
+      }
+      Then {
+        output.should end_with <<-md
+Main Title
+==========
+
+Main Subtitle
+
+Also Main Subtitle
+
+## Sección 1
+
+### Capítulo 1
+        md
+      }
+    end
   end
 end
