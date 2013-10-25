@@ -88,7 +88,7 @@ class Scraper
           tag = tag.first_element_child if tag.first_element_child.element? && tag.first_element_child.name == "tbody"
           rows = tag.search("./tr")
           rows.each do |row|
-            output << row.xpath(".//td//text()").map(&:text).join(" ").truncate;
+            output << parse_row_with_item(row);
             output << ""
           end
         end
@@ -103,4 +103,12 @@ class Scraper
     end
     output.join("\n")
   end
+
+  private
+
+  def parse_row_with_item(row)
+    str = row.xpath(".//td//text()").map(&:text).join(" ").truncate;
+    str.gsub(/^((\d+|[a-zA-Z]'?))[\.º)\-]+\s/, '\1) ')
+  end
+
 end

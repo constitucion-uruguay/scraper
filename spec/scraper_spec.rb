@@ -333,6 +333,41 @@ A) Lorem ipsum
                   }
                 end
 
+                context "with items having different index separators" do
+                  When {
+                    input << <<-html
+<table>
+  <tr>
+    <td>A.</td>
+    <td>Lorem ipsum</td>
+  </tr>
+  <tr>
+    <td>1º</td>
+    <td>Lorem ipsum</td>
+  </tr>
+  <tr>
+    <td>21.-</td>
+    <td>Lorem ipsum</td>
+  </tr>
+  <tr>
+    <td>Z')</td>
+    <td>Lorem ipsum</td>
+  </tr>
+</table>
+                    html
+                  }
+                  Then {
+                    output.should end_with <<-md
+A) Lorem ipsum
+
+1) Lorem ipsum
+
+21) Lorem ipsum
+
+Z') Lorem ipsum
+                    md
+                  }
+                end
               end
 
               context "> Article with ordinal indicator" do
