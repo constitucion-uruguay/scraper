@@ -13,6 +13,7 @@ class Scraper
 
   ARTICLE_INDEX_PATTERN = /^(Artículo \d+)\W+/i
   ITEM_INDEX_PATTERN    = /^((\d+|[a-zA-Z]'?))[\.º)\-]+\s/
+  NOTE_INDEX_PATTERN    = /^(\*+)\s/
 
   def initialize(html)
     @doc = Nokogiri::HTML(html, nil, "iso-8859-1")
@@ -58,6 +59,9 @@ class Scraper
           output << parse_article(tag)
         elsif is_item_list?(tag)
           output << parse_item_list(tag)
+        elsif is_endnotes?(tag)
+          state = :endnotes
+          next
         elsif is_chapter_title?(tag)
           state = :chapter
           next
@@ -79,6 +83,11 @@ class Scraper
         elsif is_special_section_title?(tag)
           state = :special_section
           next
+        end
+        tags.shift
+      when :endnotes
+        if is_endnotes_table?(tag)
+          output << parse_endnotes_table(tag)
         end
         tags.shift
       when :error
@@ -130,6 +139,14 @@ class Scraper
     tag.name == "table"
   end
 
+  def is_endnotes?(tag)
+    tag.name == "hr"
+  end
+
+  def is_endnotes_table?(tag)
+    tag.xpath(".//table").any?
+  end
+
   def parse_main_title(tag)
     tag.text.truncate << "\n" << "=" * tag.text.length << "\n"
   end
@@ -159,8 +176,7 @@ class Scraper
   end
 
   def parse_item_list(tag)
-    tag = tag.first_element_child if tag.first_element_child.element? && tag.first_element_child.name == "tbody"
-    rows = tag.search("./tr")
+    rows = tag.search(".//tr")
     output = []
     rows.each do |row|
       output << parse_row_with_item(row) << ""
@@ -169,13 +185,23 @@ class Scraper
   end
 
   def parse_article(paragraph)
-    text = paragraph.xpath(".//text()").map(&:text).join(" ").truncate;
+    text = paragraph.xpath(".//text()").map(&:text).join(" ").truncate
     text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n"
   end
 
   def parse_row_with_item(row)
-    text = row.xpath(".//td//text()").map(&:text).join(" ").truncate;
+    text = row.xpath(".//td//text()").map(&:text).join(" ").truncate
     text.gsub(ITEM_INDEX_PATTERN, '\1) ')
+  end
+
+  def parse_endnotes_table(tag)
+    rows = tag.search(".//tr")
+    text = ""
+    rows.each do |row|
+      line = row.xpath(".//text()").map(&:text).join(" ").truncate
+      text << "\n" << line.gsub(NOTE_INDEX_PATTERN, '(\1) ') << "\n"
+    end
+    text
   end
 
 end

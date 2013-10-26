@@ -444,7 +444,7 @@ __Artículo 1__. Lorem ipsum
     <tr>
       <td>A)</td>
       <td>Lorem ipsum</td>
-    </tr
+    </tr>
   </tbody>
 </table>
                     html
@@ -454,6 +454,36 @@ __Artículo 1__. Lorem ipsum
 A) Lorem ipsum
                     md
                   }
+
+                  context "> With endnotes" do
+                    When {
+                      input << <<-html
+<hr>
+<div>
+  <table>
+    <tbody>
+      <tr>
+        <td>*</td>
+        <td>Lorem ipsum</td>
+      </tr>
+      <tr>
+        <td>**</td>
+        <td>Lorem ipsum</td>
+      </tr>
+    </tbody>
+  </table>
+</div>
+                      html
+                    }
+                    Then {
+                      output.should end_with <<-md
+(*) Lorem ipsum
+
+(**) Lorem ipsum
+                      md
+                    }
+
+                  end
                 end
 
                 context "> With parts" do
