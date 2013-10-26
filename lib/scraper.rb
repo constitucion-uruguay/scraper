@@ -176,7 +176,7 @@ class Scraper
       line = flatten_all_text_descendants(row)
       text << "\n" << line.gsub(ITEM_INDEX_PATTERN, '\1) ') << "\n"
     end
-    "\n" << text
+    text
   end
 
   def parse_article(tag)
@@ -186,12 +186,12 @@ class Scraper
 
   def parse_endnotes_table(tag)
     rows = tag.search(".//tr")
-    text = ""
+    text = "\n---\n"
     rows.each do |row|
       line = flatten_all_text_descendants(row)
       text << "\n" << line.gsub(NOTE_INDEX_PATTERN, '(\1) ') << "\n"
     end
-    "\n" << text
+    text
   end
 
   def truncate_spaces(text)

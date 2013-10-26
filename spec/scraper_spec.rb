@@ -477,6 +477,10 @@ A) Lorem ipsum
                     }
                     Then {
                       output.should end_with <<-md
+A) Lorem ipsum
+
+---
+
 (*) Lorem ipsum
 
 (**) Lorem ipsum
