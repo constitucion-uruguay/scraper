@@ -182,7 +182,7 @@ class Scraper
 
   def parse_article(tag)
     text = truncate_spaces flatten_all_text_descendants(tag)
-    "\n" << text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n"
+    "\n" << text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n" unless text.empty?
   end
 
   def parse_endnotes_table(tag)

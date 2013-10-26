@@ -423,6 +423,18 @@ __Artículo 1__. Lorem ipsum
                 }
               end
 
+              context "> Empty article" do
+                When {
+                  input << <<-html
+<p></p>
+                  html
+                }
+                Then {
+                  output.should end_with <<-md
+### CAPITULO I
+                  md
+                }
+              end
               context "> Transitional arrangements" do
                 When {
                   input << <<-html
