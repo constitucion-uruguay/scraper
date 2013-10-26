@@ -82,6 +82,7 @@ class Scraper
       when :endnotes
         if is_endnotes_table?(tag)
           output << parse_endnotes_table(tag)
+          state = :finish
         end
         tags.shift
       when :error

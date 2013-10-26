@@ -487,6 +487,20 @@ A) Lorem ipsum
                       md
                     }
 
+                    context "> With tags after endnotes" do
+                      When {
+                        input << <<-html
+<div>
+  <table><tr><td>1</td></tr></table>
+</div>
+                        html
+                      }
+                      Then {
+                        output.should end_with <<-md
+(**) Lorem ipsum
+                        md
+                      }
+                    end
                   end
                 end
 
