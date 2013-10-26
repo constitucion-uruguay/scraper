@@ -177,21 +177,17 @@ class Scraper
 
   def parse_item_list(tag)
     rows = tag.search(".//tr")
-    output = []
+    text = ""
     rows.each do |row|
-      output << parse_row_with_item(row) << ""
+      line = row.xpath(".//text()").map(&:text).join(" ").truncate
+      text << "\n" << line.gsub(ITEM_INDEX_PATTERN, '\1) ') << "\n"
     end
-    output.join("\n")
+    text
   end
 
   def parse_article(paragraph)
     text = paragraph.xpath(".//text()").map(&:text).join(" ").truncate
     text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n"
-  end
-
-  def parse_row_with_item(row)
-    text = row.xpath(".//td//text()").map(&:text).join(" ").truncate
-    text.gsub(ITEM_INDEX_PATTERN, '\1) ')
   end
 
   def parse_endnotes_table(tag)
