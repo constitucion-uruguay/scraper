@@ -92,7 +92,7 @@ class Scraper
         tags.shift
       end
     end
-    output.join("\n")
+    output.join
   end
 
   private
@@ -146,27 +146,27 @@ class Scraper
   end
 
   def parse_main_subtitle(tag)
-    flatten_all_text_descendants(tag) << "\n";
+    "\n" << flatten_all_text_descendants(tag) << "\n";
   end
 
   def parse_section_title(tag)
-    "## #{truncate_spaces tag.text}\n"
+    "\n## #{truncate_spaces tag.text}\n"
   end
 
   def parse_section_subtitle(tag)
-    flatten_all_text_descendants(tag) << "\n";
+    "\n" << flatten_all_text_descendants(tag) << "\n";
   end
 
   def parse_chapter_title(tag)
-    "### #{truncate_spaces tag.text}\n"
+    "\n### #{truncate_spaces tag.text}\n"
   end
 
   def parse_special_section_title(tag)
-    "## #{truncate_spaces tag.text}\n"
+    "\n## #{truncate_spaces tag.text}\n"
   end
 
   def parse_special_section_part_title(tag)
-    "### #{truncate_spaces tag.text}\n"
+    "\n### #{truncate_spaces tag.text}\n"
   end
 
   def parse_item_list(tag)
@@ -176,13 +176,12 @@ class Scraper
       line = flatten_all_text_descendants(row)
       text << "\n" << line.gsub(ITEM_INDEX_PATTERN, '\1) ') << "\n"
     end
-    text
+    "\n" << text
   end
 
-  # todo: agregar espacio al principio, no dos al final
   def parse_article(tag)
     text = truncate_spaces flatten_all_text_descendants(tag)
-    text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n"
+    "\n" << text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n"
   end
 
   def parse_endnotes_table(tag)
@@ -192,7 +191,7 @@ class Scraper
       line = flatten_all_text_descendants(row)
       text << "\n" << line.gsub(NOTE_INDEX_PATTERN, '(\1) ') << "\n"
     end
-    text
+    "\n" << text
   end
 
   def truncate_spaces(text)
