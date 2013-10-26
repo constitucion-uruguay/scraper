@@ -3,12 +3,6 @@
 require "nokogiri"
 require "open-uri"
 
-class String
-  def truncate
-    return self.gsub(/\n/, ' ').split.join(' ')
-  end
-end
-
 class Scraper
 
   ARTICLE_INDEX_PATTERN = /^(Artículo \d+)\W+/i
@@ -148,7 +142,7 @@ class Scraper
   end
 
   def parse_main_title(tag)
-    tag.text.truncate << "\n" << "=" * tag.text.length << "\n"
+    truncate_spaces(tag.text) << "\n" << "=" * tag.text.length << "\n"
   end
 
   def parse_main_subtitle(tag)
@@ -156,7 +150,7 @@ class Scraper
   end
 
   def parse_section_title(tag)
-    "## #{tag.text.truncate}\n"
+    "## #{truncate_spaces tag.text}\n"
   end
 
   def parse_section_subtitle(tag)
@@ -164,15 +158,15 @@ class Scraper
   end
 
   def parse_chapter_title(tag)
-    "### #{tag.text.truncate}\n"
+    "### #{truncate_spaces tag.text}\n"
   end
 
   def parse_special_section_title(tag)
-    "## #{tag.text.truncate}\n"
+    "## #{truncate_spaces tag.text}\n"
   end
 
   def parse_special_section_part_title(tag)
-    "### #{tag.text.truncate}\n"
+    "### #{truncate_spaces tag.text}\n"
   end
 
   def parse_item_list(tag)
@@ -185,8 +179,9 @@ class Scraper
     text
   end
 
-  def parse_article(paragraph)
-    text = paragraph.xpath(".//text()").map(&:text).join(" ").truncate
+  # todo: agregar espacio al principio, no dos al final
+  def parse_article(tag)
+    text = truncate_spaces flatten_all_text_descendants(tag)
     text.gsub(ARTICLE_INDEX_PATTERN, '__\1__. ') << "\n"
   end
 
@@ -200,7 +195,11 @@ class Scraper
     text
   end
 
+  def truncate_spaces(text)
+    text.gsub(/\n/, ' ').split.join(' ')
+  end
+
   def flatten_all_text_descendants(tag)
-    tag.xpath(".//text()").map(&:text).join(" ").truncate
+    truncate_spaces tag.xpath(".//text()").map(&:text).join(" ")
   end
 end
