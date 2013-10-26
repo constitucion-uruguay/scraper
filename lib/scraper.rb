@@ -152,7 +152,7 @@ class Scraper
   end
 
   def parse_main_subtitle(tag)
-    tag.xpath(".//text()").map(&:text).join(" ").truncate << "\n";
+    flatten_all_text_descendants(tag) << "\n";
   end
 
   def parse_section_title(tag)
@@ -160,7 +160,7 @@ class Scraper
   end
 
   def parse_section_subtitle(tag)
-    tag.xpath(".//text()").map(&:text).join(" ").truncate << "\n";
+    flatten_all_text_descendants(tag) << "\n";
   end
 
   def parse_chapter_title(tag)
@@ -179,7 +179,7 @@ class Scraper
     rows = tag.search(".//tr")
     text = ""
     rows.each do |row|
-      line = row.xpath(".//text()").map(&:text).join(" ").truncate
+      line = flatten_all_text_descendants(row)
       text << "\n" << line.gsub(ITEM_INDEX_PATTERN, '\1) ') << "\n"
     end
     text
@@ -194,10 +194,13 @@ class Scraper
     rows = tag.search(".//tr")
     text = ""
     rows.each do |row|
-      line = row.xpath(".//text()").map(&:text).join(" ").truncate
+      line = flatten_all_text_descendants(row)
       text << "\n" << line.gsub(NOTE_INDEX_PATTERN, '(\1) ') << "\n"
     end
     text
   end
 
+  def flatten_all_text_descendants(tag)
+    tag.xpath(".//text()").map(&:text).join(" ").truncate
+  end
 end
