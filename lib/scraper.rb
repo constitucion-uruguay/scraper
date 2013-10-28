@@ -2,8 +2,10 @@
 
 require "nokogiri"
 require "open-uri"
+require "helpers/scraper_helper"
 
 class Scraper
+  include ScraperHelper
 
   ARTICLE_INDEX_PATTERN = /^(Artículo \d+)\W+/i
   ITEM_INDEX_PATTERN    = /^((\d+|[a-zA-Z]'?))[\.º)\-]+\s/
@@ -193,13 +195,5 @@ class Scraper
       text << "\n" << line.gsub(NOTE_INDEX_PATTERN, '(\1) ') << "\n"
     end
     text
-  end
-
-  def truncate_spaces(text)
-    text.gsub(/\n/, ' ').split.join(' ')
-  end
-
-  def flatten_all_text_descendants(tag)
-    truncate_spaces tag.xpath(".//text()").map(&:text).join(" ")
   end
 end
