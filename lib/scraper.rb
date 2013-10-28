@@ -2,7 +2,7 @@
 
 require "nokogiri"
 require "open-uri"
-require "helpers/scraper_helper"
+require_relative "helpers/scraper_helper"
 
 class Scraper
   include ScraperHelper
