@@ -3,6 +3,9 @@ GEM
   specs:
     columnize (0.3.6)
     diff-lcs (1.2.4)
+    htmldiff (0.0.1)
+    kramdown (1.2.0)
+    linecache (0.46-java)
     nokogiri (1.5.9)
     nokogiri (1.5.9-java)
     rake (10.0.4)
@@ -20,6 +23,8 @@ GEM
     ruby-debug (0.10.4)
       columnize (>= 0.1)
       ruby-debug-base (~> 0.10.4.0)
+    ruby-debug-base (0.10.4)
+      linecache (>= 0.3)
     ruby-debug-base (0.10.4-java)
     sorcerer (0.3.10)
 
@@ -27,6 +32,8 @@ PLATFORMS
   java
 
 DEPENDENCIES
+  htmldiff
+  kramdown
   nokogiri
   rake (= 10.0.4)
   rspec-given (= 2.4.1)
