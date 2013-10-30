@@ -1,4 +1,5 @@
 #!/usr/bin/env ruby
+# encoding: UTF-8
 
 require 'lib/scraper'
 require 'open-uri'
@@ -17,6 +18,5 @@ class Compare
     diff @html1, @html2
   end
 end
-
 
 puts Compare.new(open(ARGV[0]).read, open(ARGV[1]).read).to_html
