@@ -1,16 +1,24 @@
 #!/bin/bash
 
-echo "Scraping Constitucion de 1830..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const830.htm > 1830.md
-echo "Scraping Constitucion de 1918..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const918.htm > 1918.md
-echo "Scraping Constitucion de 1934..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const934.htm > 1934.md
-echo "Scraping Constitucion de 1942..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const942.htm > 1942.md
-echo "Scraping Constitucion de 1952..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const952.htm > 1952.md
-echo "Scraping Constitucion de 1967..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const967.htm > 1967.md
-echo "Scraping Constitucion vigente..."
-./script/scrape.rb http://www.parlamento.gub.uy/Constituciones/Const004.htm > vigente.md
+function scrape() {
+  echo "Scraping Constitución de $1..."
+  echo "http://www.parlamento.gub.uy/Constituciones/Const${1:1}.htm"
+  jruby ./script/scrape.rb "http://www.parlamento.gub.uy/Constituciones/Const${1:1}.htm" > $1.md
+}
+
+for i in 1830 1918 1934 1942 1952 1967 2004
+do
+  scrape $i
+done
+
+function compare() {
+  local outputfile="diff_$1_$2.html"
+  echo "Comparing files $1.md and $2.md into $outputfile"
+  jruby ./script/diff.rb $1.md $2.md > $outputfile
+}
+
+compare 1830 1918
+compare 1918 1934
+compare 1934 1942
+compare 1942 1952
+compare 1967 2004

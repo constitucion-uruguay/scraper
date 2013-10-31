@@ -19,4 +19,10 @@ class Compare
   end
 end
 
-puts Compare.new(open(ARGV[0]).read, open(ARGV[1]).read).to_html
+file1 = File.open(ARGV[0])
+file2 = File.open(ARGV[1])
+
+puts Compare.new(file1.read, file2.read).to_html
+
+file1.close
+file2.close
